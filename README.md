@@ -1,4 +1,4 @@
-# Does The Presence Of A Farmer's Market In A Zip Code Predict Resident Median Income?
+# Can Farmer's Markets Predict The Median Income Of A Zip Code?
 
 **Name**: Christina Buencamino<br>
 **Email**: christina.buencamino28@myhunter.cuny.edu (school) | c.buencamino123@gmail.com (work)<br>
