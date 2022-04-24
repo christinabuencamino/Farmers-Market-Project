@@ -60,10 +60,11 @@ def CreateMedianChoropleth():
                         columns=['NAME', 'S1903_C03_001E'],
                         legend_name='Median Income')
 ```
-<br>
+
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
+
 ![Median-Market-Map](https://user-images.githubusercontent.com/66935005/164957710-0b202d63-440d-47c3-af42-8a625e65ace1.png)
-<br>
+
 ```python
     # Read in csv and clean up data
     medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
