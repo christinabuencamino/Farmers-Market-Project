@@ -17,4 +17,24 @@ To begin, I created a map of all of the farmer's markets in NYC using the <a hre
 
 <p align="center">
 <img width="700px" src="https://github.com/christinabuencamino/Farmers-Market-Project/blob/5a0bb2f9641f48703e42edde42d42d9ae73a09df/Farmers-Market-Locations.png" />
-</p>
+</p><br>
+
+```python
+def CreateFarmersMap(csv):
+    # Read in coordinates from csv
+    cols_kept = ['Latitude', 'Longitude']
+    markets = pd.read_csv(csv, usecols=cols_kept)
+    
+    # Create map
+    m = folium.Map(location=[40.74, -73.96356241384754], zoom_start=11.5)
+    folium.TileLayer('stamentoner').add_to(m) # black and white filter
+    
+    # Cycle through coordinates and create markets
+    for lat, lon in zip(markets['Latitude'], markets['Longitude']):
+        folium.CircleMarker([lat, lon], radius=3, color='blue', fill=True, fill_color='blue', fill_opacity=0.7).add_to(m)
+    
+    # Optionally save and open in browser
+    m.save("Farmers-Markets-Map.html")
+    webbrowser.open('Farmers-Markets-Map.html')
+```
+
