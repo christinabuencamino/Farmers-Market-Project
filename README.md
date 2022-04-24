@@ -31,9 +31,32 @@ def CreateFarmersMap(csv):
     # Cycle through coordinates and create markets
     for lat, lon in zip(markets['Latitude'], markets['Longitude']):
         folium.CircleMarker([lat, lon], radius=3, color='blue', fill=True, fill_color='blue', fill_opacity=0.7).add_to(m)
-    
-    # Optionally save and open in browser
-    m.save("Farmers-Markets-Map.html")
-    webbrowser.open('Farmers-Markets-Map.html')
 ```
+Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>.
 
+![Median-Choropleth-Map](https://user-images.githubusercontent.com/66935005/164957410-6f065888-5daa-4716-96f1-b49c1f2ddb96.png)
+<br><br>
+![Median-Choropleth-Legend](https://user-images.githubusercontent.com/66935005/164957415-d13c6ee8-694f-4535-8b68-ff53877f35b0.png)
+
+```python
+def CreateMedianChoropleth():
+    # Read in csv and clean up data
+    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
+    medianData = medianData.dropna()
+    medianData = medianData.drop([0]) # Drop row of column headers
+    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']] # Reformat zip codes
+    medianData['NAME'] = medianData['NAME'].astype('str')
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
+
+    # Create map using geojson data boundaries to connect with zip codes from csv, and coloring based on income
+    m = folium.Map(location=[40.75, -74], zoom_start=11.4)
+    folium.TileLayer('stamentoner').add_to(m) # Black and white filter
+    m.choropleth(geo_data='ZipCodeGeo.json',
+                        fill_color='Reds', fill_opacity=0.9, line_opacity=0.5,
+                        data=medianData,
+                        key_on='feature.properties.postalCode',
+                        columns=['NAME', 'S1903_C03_001E'],
+                        legend_name='Median Income')
+```
