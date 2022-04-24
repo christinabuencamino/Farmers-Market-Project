@@ -9,8 +9,9 @@
 **GitHub**: christinabuencamino<br>
 **LinkedIn**: christina-buencamino<br>
 <br>
-## Initial Hypothesis
+## Initial Hypothesis & Notes
 My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
+Additionally, I would like to disclose that I had to edit the farmer's market csv on lines 34 and 64 because the inputted coordinates were not accurate, so I replaced them with their respective coordinates as found on Google Maps.
 <br>
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
