@@ -63,3 +63,37 @@ def CreateMedianChoropleth():
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
 ![Median-Market-Map](https://user-images.githubusercontent.com/66935005/164957710-0b202d63-440d-47c3-af42-8a625e65ace1.png)
 
+```python
+    # Read in csv and clean up data
+    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
+    medianData = medianData.dropna()
+    medianData = medianData.drop([0])
+    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']]
+    medianData['NAME'] = medianData['NAME'].astype('str')
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
+
+    # Create map, now with choropleth shading and also market markers
+    m = folium.Map(location=[40.75, -74], zoom_start=11.4)
+    folium.TileLayer('stamentoner').add_to(m)
+    m.choropleth(geo_data='ZipCodeGeo.json',
+                        fill_color='Reds', fill_opacity=0.9, line_opacity=0.5,
+                        data=medianData,
+                        key_on='feature.properties.postalCode',
+                        columns=['NAME', 'S1903_C03_001E'],
+                        legend_name='Median Income')
+
+    cols_kept = ['Latitude', 'Longitude']
+    markets = pd.read_csv('DOHMH_Farmers_Markets.csv', usecols=cols_kept)
+
+    for i in range(0, len(markets)):
+        folium.CircleMarker(
+            [markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']], 
+            radius=3, 
+            color='blue', 
+            fill=True, 
+            fill_color='blue', 
+            fill_opacity=0.7
+        ).add_to(m)
+```
