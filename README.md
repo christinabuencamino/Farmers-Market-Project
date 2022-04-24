@@ -15,6 +15,8 @@ My initial hypothesis was that farmer's markets target higher income neighborhoo
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
 
+![Farmers-Market-Locations](https://user-images.githubusercontent.com/66935005/164956393-2ecf082a-17a7-4ed8-b624-539d243b601f.png)
+
 <p align="center">
 <img width="700px" src="https://github.com/christinabuencamino/Farmers-Market-Project/blob/5a0bb2f9641f48703e42edde42d42d9ae73a09df/Farmers-Market-Locations.png" />
 </p><br>
