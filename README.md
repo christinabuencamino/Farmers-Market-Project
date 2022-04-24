@@ -64,6 +64,8 @@ def CreateMedianChoropleth():
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
 
 ![Median-Market-Map](https://user-images.githubusercontent.com/66935005/164957710-0b202d63-440d-47c3-af42-8a625e65ace1.png)
+<br><br>
+![Median-Choropleth-Legend](https://user-images.githubusercontent.com/66935005/164957415-d13c6ee8-694f-4535-8b68-ff53877f35b0.png)
 
 ```python
     # Read in csv and clean up data
@@ -99,3 +101,8 @@ Finally, I combined both maps in order ot visually see the breakdown of farmer's
             fill_opacity=0.7
         ).add_to(m)
 ```
+<br>
+Looking at this map, I was unable to see a clear trend in the data, so I moved on to other means of data analysis.
+<br>
+## Graphing The Data
+insert smart stuff from my big brain here when i am not sleep deprived
