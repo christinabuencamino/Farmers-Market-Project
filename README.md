@@ -149,3 +149,7 @@ Coupling this with the [U.S. Census Bureau's median income facts per borough](ht
 <br>
 ## Model Prediction
 Predicting my specific data is not as straightforward since it is simply location based. If I had more time, I would read up on Time Series forecasting and other methods of prediction not focused on in class, so that I could find a model that truly fits my data. In the mean time, however, I attempted to use Logistic Regression in order to make predictions, since I can treat the presence of a farmer's market as a boolean value. Logistic Regression supports boolean prediction, so let's go from there.
+<br><br>
+First I made a regular plot of my data. The curve shows there is more markets in the lower tax brackets.<br>
+
+![Reg_Plot](https://user-images.githubusercontent.com/66935005/165627627-4bf2e26a-0363-4645-9033-88da9f7921b5.png)
