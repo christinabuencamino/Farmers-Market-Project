@@ -65,7 +65,9 @@ def CreateMedianChoropleth():
 ```
 <br>
 Here is a closer look at downtown Manhattan, which contains the highest median zipcode. <br>
+
 ![manhattan](https://user-images.githubusercontent.com/66935005/165587283-30026112-2ce9-4f96-98d6-2a11b1742119.png)
+
 <br>
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
 
