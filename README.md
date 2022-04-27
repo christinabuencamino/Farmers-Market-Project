@@ -107,7 +107,7 @@ Looking at this map, I was unable to see a clear trend in the data, so I moved o
 <br>
 ## Graphing The Data
 I wanted to look at a more general breakdown of the distribution of markets across NYC in order to see if there is a correlation purely from that. To begin this process, I made a bar plot of markets per borough, as seen below.
-<br><br>
+<br>
 
 ![Borough_Bar_Plot](https://user-images.githubusercontent.com/66935005/165559362-b55e017d-56e9-4b7d-bfa3-f44f57d2511c.png)
 
