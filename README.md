@@ -5,16 +5,16 @@
 **Resources**: Please see bottom of page.<br>
 **Abstract**: My final project aims to discover if there is a correlation between the median income of a zip code and how many (if any) farmer's markets station in said zip code. I used an OpenData CSV breakdown of NYC farmer's markets present in 2019, along with census data that shows the 2019 median income (in dollars) of zip codes in NYC.<br>
 <br>
-<a href url="https://github.com/christinabuencamino">Github</a>
+[Github](https://github.com/christinabuencamino)
 <br>
-<a href url="https://linkedin.com/christina-buencamino">LinkedIn</a>
+[LinkedIn](https://linkedin.com/christina-buencamino)
 <br>
 ## Initial Hypothesis & Notes
 My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
 Additionally, I would like to disclose that I had to edit the farmer's market csv on lines 34 and 64 because the inputted coordinates were not accurate, so I replaced them with their respective coordinates as found on Google Maps.
 <br>
 ## Mapping The Data
-To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
+To begin, I created a map of all of the farmer's markets in NYC using the [DOHMH Farmers Markets Open Data set](https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data).
 
 <iframe src="Market-Map.html" height="800" width="650"></iframe>
 
@@ -43,7 +43,7 @@ def CreateFarmersMap(csv):
                 border_color='transparent')
         ).add_to(m)
 ```
-Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan). I scaled the map by <a href='https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets'>federal income tax brackets</a>.
+Next, I created a chloropleth map of the ranges of median incomes in NYC using the [2019 census data](https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903) and [NYC geojson data](https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson). Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan). I scaled the map by [federal income tax brackets](https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets).
 
 <iframe src="Median-Map.html" height="800" width="650"></iframe>
 
@@ -143,7 +143,7 @@ def GenerateBarPlot(market_csv):
     plt.show()
 ```
 <br>
-Coupling this with the <a href url="https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219">U.S. Census Bureau's median income facts per borough</a>, this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island**, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
+Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island**, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
 <br><br>
 ** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
 <br>
