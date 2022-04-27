@@ -145,6 +145,53 @@ def GenerateBarPlot(market_csv):
 <br>
 Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island**, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
 <br><br>
+To visualize the distribution of markets in specific zip codes, I categorized each zip code's median income into the federal income tax brackets:<br>
+
+![Tax_Brackets](https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png)
+
+<br>
+```python
+def GenerateTaxPlot():
+    # Call function to generate zip codes for markets
+    zipcodes = GenerateZipCode()
+    zipcodes = zipcodes.astype(int)
+
+    # Clean up median income csv
+    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
+    medianData = medianData.dropna()
+    medianData = medianData.drop([0])
+    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']]
+    medianData['NAME'] = medianData['NAME'].astype('int')
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
+    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
+
+    # Merge market data and median income data, and isolate only zip codes that have markets
+    graph_data = medianData.merge(zipcodes, left_on='NAME', right_on='Market_Present', how='left')
+    graph_data.Market_Present = graph_data.Market_Present.notnull().astype(int)
+    graph_data = graph_data.sort_values(by=['S1903_C03_001E'])
+    graph_data = graph_data[graph_data['Market_Present'] == 1]
+    graph_data = graph_data[graph_data['S1903_C03_001E'] != 0]
+
+    # Categorize data into tax brackets
+    taxes = [0, 10276, 41775, 89075, 170050, 215950, 250001]
+    labels = ['$0 - $10276', '$10276 - $41775', '$41775 - $89075', '$89075 - $170050', '$170050 - $215950', '215950+']
+    graph_data['Tax_Bracket'] = pd.cut(graph_data['S1903_C03_001E'], taxes, labels=labels, ordered=False)
+
+    # Fix indexing
+    brackets = graph_data['Tax_Bracket'].value_counts().to_frame()
+    brackets = brackets.reindex(labels)
+
+    # Create bar plot
+    fig, ax = plt.subplots()
+    sns.barplot(x=brackets.index, y=brackets['Tax_Bracket'], data=brackets,
+                             color="salmon")
+    plt.xticks(rotation=30)
+    ax.set_xlabel('Tax Brackets')
+    ax.set_ylabel('Number of Farmers Markets')
+    ax.set_title("Number Of Markets Per Zip Code's Tax Bracket In NYC")
+```
+<br><br>
 ** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
 <br>
 ## Model Prediction
@@ -153,3 +200,15 @@ Predicting my specific data is not as straightforward since it is simply locatio
 First I made a regular plot of my data. The curve shows there is more markets in the lower tax brackets.<br>
 
 ![Reg_Plot](https://user-images.githubusercontent.com/66935005/165627627-4bf2e26a-0363-4645-9033-88da9f7921b5.png)
+
+```python
+# Using same data cleaning as before
+y_data = graph_data['Market_Present']
+x_data = graph_data['S1903_C03_001E']
+
+plot = sns.regplot(x=x_data, y=y_data, data=graph_data, logistic=True, ci=None, y_jitter=0.02)
+plot.set_xlabel('Median Income Of NYC Zip Codes (Ascending)')
+plot.set_ylabel('Market Present')
+plot.set_title("Farmer's Market Distribution Amongst NYC Zip Codes")
+```
+
