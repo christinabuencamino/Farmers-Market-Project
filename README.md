@@ -1,13 +1,13 @@
 # Can Farmer's Markets Predict The Median Income Of A Zip Code?
 
 **Name**: Christina Buencamino<br>
-**Email**: christina.buencamino28@myhunter.cuny.edu (school) | c.buencamino123@gmail.com (work)<br>
+**Email**: christina.buencamino28@myhunter.cuny.edu | c.buencamino123@gmail.com (work)<br>
 **Resources**: Please see bottom of page.<br>
 **Abstract**: My final project aims to discover if there is a correlation between the median income of a zip code and how many (if any) farmer's markets station in said zip code. I used an OpenData CSV breakdown of NYC farmer's markets present in 2019, along with census data that shows the 2019 median income (in dollars) of zip codes in NYC.<br>
 <br>
 **URL**: https://christinabuencamino.github.io/Farmers-Market-Project/<br>
-**GitHub**: christinabuencamino<br>
-**LinkedIn**: christina-buencamino<br>
+<a href url="github.com/christinabuencamino">Github</a><br>
+<a href url="linkedin.com/christina-buencamino">LinkedIn</a>
 <br>
 ## Initial Hypothesis & Notes
 My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
