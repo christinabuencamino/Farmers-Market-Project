@@ -16,6 +16,10 @@ Additionally, I would like to disclose that I had to edit the farmer's market cs
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
 
+<iframe src="Market-Map.html" height="500" width="500"></iframe>
+
+<br>
+
 ![Screenshot (84)](https://user-images.githubusercontent.com/66935005/165593679-ed1a3e72-4a3d-4628-ae9a-b346b8a0dd74.png)
 
 
