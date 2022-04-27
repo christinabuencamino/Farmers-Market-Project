@@ -16,7 +16,7 @@ Additionally, I would like to disclose that I had to edit the farmer's market cs
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
 
-![Farmers-Market-Locations](https://user-images.githubusercontent.com/66935005/164956393-2ecf082a-17a7-4ed8-b624-539d243b601f.png)
+![markets](https://user-images.githubusercontent.com/66935005/165591408-cafac096-d136-4937-96b6-30626fae8183.png)
 
 
 ```python
@@ -30,8 +30,15 @@ def CreateFarmersMap(csv):
     folium.TileLayer('stamentoner').add_to(m) # black and white filter
     
     # Cycle through coordinates and create markets
-    for lat, lon in zip(markets['Latitude'], markets['Longitude']):
-        folium.CircleMarker([lat, lon], radius=3, color='blue', fill=True, fill_color='blue', fill_opacity=0.7).add_to(m)
+    for i in range(0, len(markets)):
+        folium.Marker(
+            location=[markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']],
+            icon=BeautifyIcon(
+                icon='star',
+                inner_icon_style='color:red;font-size:10px;',
+                background_color='transparent',
+                border_color='transparent')
+        ).add_to(m)
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan).
 
@@ -69,7 +76,7 @@ Here is a closer look at downtown Manhattan, which contains the highest median z
 ![manhattan](https://user-images.githubusercontent.com/66935005/165587283-30026112-2ce9-4f96-98d6-2a11b1742119.png)
 
 <br>
-Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.<br>
+Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
 
 ![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
 <br><br>
@@ -90,7 +97,7 @@ Finally, I combined both maps in order ot visually see the breakdown of farmer's
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
     folium.TileLayer('stamentoner').add_to(m)
     m.choropleth(geo_data='ZipCodeGeo.json',
-                        fill_color='Reds', fill_opacity=0.9, line_opacity=0.5,
+                        fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
                         data=medianData,
                         key_on='feature.properties.postalCode',
                         columns=['NAME', 'S1903_C03_001E'],
@@ -99,7 +106,7 @@ Finally, I combined both maps in order ot visually see the breakdown of farmer's
     cols_kept = ['Latitude', 'Longitude']
     markets = pd.read_csv('DOHMH_Farmers_Markets.csv', usecols=cols_kept)
 
-        for i in range(0, len(markets)):
+    for i in range(0, len(markets)):
         folium.Marker(
             location=[markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']],
             icon=BeautifyIcon(
