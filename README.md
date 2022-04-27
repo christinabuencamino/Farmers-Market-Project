@@ -16,7 +16,7 @@ Additionally, I would like to disclose that I had to edit the farmer's market cs
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
 
-![markets](https://user-images.githubusercontent.com/66935005/165591408-cafac096-d136-4937-96b6-30626fae8183.png)
+![Screenshot (84)](https://user-images.githubusercontent.com/66935005/165593679-ed1a3e72-4a3d-4628-ae9a-b346b8a0dd74.png)
 
 
 ```python
@@ -29,23 +29,26 @@ def CreateFarmersMap(csv):
     m = folium.Map(location=[40.74, -73.96356241384754], zoom_start=11.5)
     folium.TileLayer('stamentoner').add_to(m) # black and white filter
     
+    # Create NYC zip code borders from geojson data
+    m.choropleth(geo_data='ZipCodeGeo.json', line_color='black',
+               line_weight=1, fill_color='transparent')
+    
     # Cycle through coordinates and create markets
     for i in range(0, len(markets)):
         folium.Marker(
             location=[markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']],
             icon=BeautifyIcon(
                 icon='star',
-                inner_icon_style='color:red;font-size:10px;',
+                inner_icon_style='color:lightgreen;font-size:10px;',
                 background_color='transparent',
                 border_color='transparent')
         ).add_to(m)
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan).
 
+![Screenshot (82)](https://user-images.githubusercontent.com/66935005/165593855-caf439ac-5160-415c-9cff-c5008d5b9973.png)
 
-![Improved_Median_Market_Map](https://user-images.githubusercontent.com/66935005/165586648-2dae9302-c151-4c9b-bc77-b3b0d96572e0.png)
-<br>
-![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586608-82605058-a9ca-4394-803c-6abf7bb37b0f.png)
+
 
 ```python
 def CreateMedianChoropleth():
@@ -61,7 +64,7 @@ def CreateMedianChoropleth():
 
     # Create map using geojson data boundaries to connect with zip codes from csv, and coloring based on income
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
-    folium.TileLayer('stamentoner').add_to(m)  # Black and white filter
+    folium.TileLayer('cartodbpositron').add_to(m)  # Black and white filter
     m.choropleth(geo_data='ZipCodeGeo.json', fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
                  data=medianData,
                  threshold_scale = [0, 10276, 41775, 89075, 170050, 215950, 250001],
@@ -71,16 +74,11 @@ def CreateMedianChoropleth():
                  legend_name='Median Income')
 ```
 <br>
-Here is a closer look at downtown Manhattan, which contains the highest median zipcode. <br>
 
-![manhattan](https://user-images.githubusercontent.com/66935005/165587283-30026112-2ce9-4f96-98d6-2a11b1742119.png)
-
-<br>
 Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
 
-![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
-<br><br>
-![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586679-d1c23fb5-3f41-4343-b3aa-725a971c1aca.png)
+![Screenshot (81)](https://user-images.githubusercontent.com/66935005/165593904-c4710eda-3b1d-4514-b24e-c959fd46fcb8.png)
+
 
 ```python
     # Read in csv and clean up data
@@ -95,7 +93,7 @@ Finally, I combined both maps in order to visually see the breakdown of farmer's
 
     # Create map, now with choropleth shading and also market markers
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
-    folium.TileLayer('stamentoner').add_to(m)
+    folium.TileLayer('cartodbpositron').add_to(m)
     m.choropleth(geo_data='ZipCodeGeo.json',
                         fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
                         data=medianData,
