@@ -16,7 +16,7 @@ Additionally, I would like to disclose that I had to edit the farmer's market cs
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the <a href url="https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data">DOHMH Farmers Markets Open Data set</a>.
 
-<iframe src="Market-Map.html" height="700" width="700"></iframe>
+<iframe src="Market-Map.html" height="800" width="600"></iframe>
 
 ```python
 def CreateFarmersMap(csv):
@@ -45,7 +45,7 @@ def CreateFarmersMap(csv):
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan).
 
-<iframe src="Median-Map.html" height="700" width="700"></iframe>
+<iframe src="Median-Map.html" height="800" width="600"></iframe>
 
 ```python
 def CreateMedianChoropleth():
@@ -74,7 +74,7 @@ def CreateMedianChoropleth():
 
 Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
 
-<iframe src="Median-Market-Map.html" height="700" width="700"></iframe>
+<iframe src="Median-Market-Map.html" height="800" width="600"></iframe>
 
 
 ```python
