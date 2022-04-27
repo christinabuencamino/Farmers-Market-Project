@@ -149,7 +149,7 @@ To visualize the distribution of markets in specific zip codes, I categorized ea
 
 ![Tax_Brackets](https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png)
 
-<br>
+
 ```python
 def GenerateTaxPlot():
     # Call function to generate zip codes for markets
@@ -191,7 +191,7 @@ def GenerateTaxPlot():
     ax.set_ylabel('Number of Farmers Markets')
     ax.set_title("Number Of Markets Per Zip Code's Tax Bracket In NYC")
 ```
-<br><br>
+<br>
 ** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
 <br>
 ## Model Prediction
