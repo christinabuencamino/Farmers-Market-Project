@@ -5,9 +5,9 @@
 **Resources**: Please see bottom of page.<br>
 **Abstract**: My final project aims to discover if there is a correlation between the median income of a zip code and how many (if any) farmer's markets station in said zip code. I used an OpenData CSV breakdown of NYC farmer's markets present in 2019, along with census data that shows the 2019 median income (in dollars) of zip codes in NYC.<br>
 <br>
-**URL**: https://christinabuencamino.github.io/Farmers-Market-Project/<br>
-<a href url="github.com/christinabuencamino">Github</a><br>
-<a href url="linkedin.com/christina-buencamino">LinkedIn</a>
+<a href url="https://github.com/christinabuencamino">Github</a>
+<br>
+<a href url="https://linkedin.com/christina-buencamino">LinkedIn</a>
 <br>
 ## Initial Hypothesis & Notes
 My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
@@ -43,7 +43,7 @@ def CreateFarmersMap(csv):
                 border_color='transparent')
         ).add_to(m)
 ```
-Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan).
+Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan). I scaled the map by <a href='https://www.nerdwallet.com/article/taxes/federal-income-tax-brackets'>federal income tax brackets</a>.
 
 <iframe src="Median-Map.html" height="800" width="650"></iframe>
 
