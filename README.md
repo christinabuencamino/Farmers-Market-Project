@@ -148,5 +148,4 @@ Coupling this with the [U.S. Census Bureau's median income facts per borough](ht
 ** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
 <br>
 ## Model Prediction
-ooOOoooOooohhh
-weeeeeeeeeee wwowoowowooOOOOOOOOOO
+Predicting my specific data is not as straightforward since it is simply location based. If I had more time, I would read up on Time Series forecasting and other methods of prediction not focused on in class, so that I could find a model that truly fits my data. In the mean time, however, I attempted to use Logistic Regression in order to make predictions, since I can treat the presence of a farmer's market as a boolean value. Logistic Regression supports boolean prediction, so let's go from there.
