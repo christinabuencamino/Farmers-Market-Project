@@ -148,4 +148,4 @@ Coupling this with the <a href url="https://www.census.gov/quickfacts/fact/table
 ** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
 <br>
 ## Model Prediction
-ooOOoooOoooh
+ooOOoooOooohhh
