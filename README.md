@@ -35,8 +35,8 @@ def CreateFarmersMap(csv):
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>.
 
-![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
 
+![Improved_Median_Market_Map](https://user-images.githubusercontent.com/66935005/165586648-2dae9302-c151-4c9b-bc77-b3b0d96572e0.png)
 <br><br>
 ![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586608-82605058-a9ca-4394-803c-6abf7bb37b0f.png)
 
@@ -66,7 +66,7 @@ def CreateMedianChoropleth():
 
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
 
-![Improved_Median_Market_Map](https://user-images.githubusercontent.com/66935005/165586648-2dae9302-c151-4c9b-bc77-b3b0d96572e0.png)
+![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
 <br><br>
 ![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586679-d1c23fb5-3f41-4343-b3aa-725a971c1aca.png)
 
