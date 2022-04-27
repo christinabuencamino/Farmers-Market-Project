@@ -18,11 +18,6 @@ To begin, I created a map of all of the farmer's markets in NYC using the <a hre
 
 <iframe src="Market-Map.html" height="500" width="500"></iframe>
 
-<br>
-
-![Screenshot (84)](https://user-images.githubusercontent.com/66935005/165593679-ed1a3e72-4a3d-4628-ae9a-b346b8a0dd74.png)
-
-
 ```python
 def CreateFarmersMap(csv):
     # Read in coordinates from csv
@@ -50,9 +45,7 @@ def CreateFarmersMap(csv):
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>. Note that completely white areas within NYC imply that there was no census data on that zip code (an example being Central Park in Manhattan).
 
-![Screenshot (82)](https://user-images.githubusercontent.com/66935005/165593855-caf439ac-5160-415c-9cff-c5008d5b9973.png)
-
-
+<iframe src="Median-Map.html" height="500" width="500"></iframe>
 
 ```python
 def CreateMedianChoropleth():
@@ -81,7 +74,7 @@ def CreateMedianChoropleth():
 
 Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
 
-![Screenshot (81)](https://user-images.githubusercontent.com/66935005/165593904-c4710eda-3b1d-4514-b24e-c959fd46fcb8.png)
+<iframe src="Median-Market-Map.html" height="500" width="500"></iframe>
 
 
 ```python
