@@ -37,7 +37,7 @@ Next, I created a chloropleth map of the ranges of median incomes in NYC using t
 
 
 ![Improved_Median_Market_Map](https://user-images.githubusercontent.com/66935005/165586648-2dae9302-c151-4c9b-bc77-b3b0d96572e0.png)
-<br><br>
+<br>
 ![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586608-82605058-a9ca-4394-803c-6abf7bb37b0f.png)
 
 ```python
