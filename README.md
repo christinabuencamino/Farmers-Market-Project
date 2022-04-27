@@ -7,7 +7,7 @@
 <br>
 [Github](https://github.com/christinabuencamino)
 <br>
-[LinkedIn](https://linkedin.com/christina-buencamino)
+[LinkedIn](https://www.linkedin.com/in/christina-buencamino/)
 <br>
 ## Initial Hypothesis & Notes
 My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
