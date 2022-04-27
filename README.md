@@ -106,4 +106,30 @@ Finally, I combined both maps in order ot visually see the breakdown of farmer's
 Looking at this map, I was unable to see a clear trend in the data, so I moved on to other means of data analysis.
 <br>
 ## Graphing The Data
-insert smart stuff from my big brain here when i am not sleep deprived
+I wanted to look at a more general breakdown of the distribution of markets across NYC in order to see if there is a correlation purely from that. To begin this process, I made a bar plot of markets per borough, as seen below.
+<br><br>
+
+![Borough_Bar_Plot](https://user-images.githubusercontent.com/66935005/165559362-b55e017d-56e9-4b7d-bfa3-f44f57d2511c.png)
+
+
+```python
+def GenerateBarPlot(market_csv):
+    # Cleanup farmer's market csv
+    market = pd.read_csv(market_csv)
+    market = market['Borough'].value_counts().reset_index(inplace=False)  # Create dataframe of each borough and their count of markets
+    market.columns = ["Borough", "Number of Farmer's Markets"]
+    boroughs = market
+    
+    # Generate bar plot
+    f, ax = plt.subplots(figsize=(6, 15))
+    sns.set_color_codes("pastel")
+    ax.grid(color='black', axis='x', ls='-', lw=0.25)
+    ax.set_axisbelow(True)
+    sns.barplot(x="Number of Farmer's Markets", y="Borough", data=boroughs,
+                label="Farmer's Markets Present", color="salmon")
+    ax.set(xlim=(0, 50), ylabel="Borough",
+           xlabel="Number Of Farmer's Markets")
+
+    plt.title("Number Of Farmer's Markets Per Borough")
+    plt.show()
+```
