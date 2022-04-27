@@ -35,9 +35,10 @@ def CreateFarmersMap(csv):
 ```
 Next, I created a chloropleth map of the ranges of median incomes in NYC using the <a href url="https://data.census.gov/cedsci/table?q=Income%20%28Households,%20Families,%20Individuals%29&g=1600000US3651000%248600000&y=2019&tid=ACSST5Y2019.S1903">2019 census data</a> and <a href url="https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson">NYC geojson data</a>.
 
-![Median-Choropleth-Map](https://user-images.githubusercontent.com/66935005/164957410-6f065888-5daa-4716-96f1-b49c1f2ddb96.png)
+![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
+
 <br><br>
-![Median-Choropleth-Legend](https://user-images.githubusercontent.com/66935005/164957415-d13c6ee8-694f-4535-8b68-ff53877f35b0.png)
+![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586608-82605058-a9ca-4394-803c-6abf7bb37b0f.png)
 
 ```python
 def CreateMedianChoropleth():
@@ -53,20 +54,21 @@ def CreateMedianChoropleth():
 
     # Create map using geojson data boundaries to connect with zip codes from csv, and coloring based on income
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
-    folium.TileLayer('stamentoner').add_to(m) # Black and white filter
-    m.choropleth(geo_data='ZipCodeGeo.json',
-                        fill_color='Reds', fill_opacity=0.9, line_opacity=0.5,
-                        data=medianData,
-                        key_on='feature.properties.postalCode',
-                        columns=['NAME', 'S1903_C03_001E'],
-                        legend_name='Median Income')
+    folium.TileLayer('stamentoner').add_to(m)  # Black and white filter
+    m.choropleth(geo_data='ZipCodeGeo.json', fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
+                 data=medianData,
+                 threshold_scale = [0, 10276, 41775, 89075, 170050, 215950, 250001],
+                 key_on='feature.properties.postalCode',
+                 columns=['NAME', 'S1903_C03_001E'],
+                 nan_fill_color='white',
+                 legend_name='Median Income')
 ```
 
 Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
 
-![Median-Market-Map](https://user-images.githubusercontent.com/66935005/164957710-0b202d63-440d-47c3-af42-8a625e65ace1.png)
+![Improved_Median_Market_Map](https://user-images.githubusercontent.com/66935005/165586648-2dae9302-c151-4c9b-bc77-b3b0d96572e0.png)
 <br><br>
-![Median-Choropleth-Legend](https://user-images.githubusercontent.com/66935005/164957415-d13c6ee8-694f-4535-8b68-ff53877f35b0.png)
+![Improved_Legend](https://user-images.githubusercontent.com/66935005/165586679-d1c23fb5-3f41-4343-b3aa-725a971c1aca.png)
 
 ```python
     # Read in csv and clean up data
@@ -92,14 +94,14 @@ Finally, I combined both maps in order ot visually see the breakdown of farmer's
     cols_kept = ['Latitude', 'Longitude']
     markets = pd.read_csv('DOHMH_Farmers_Markets.csv', usecols=cols_kept)
 
-    for i in range(0, len(markets)):
-        folium.CircleMarker(
-            [markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']], 
-            radius=3, 
-            color='blue', 
-            fill=True, 
-            fill_color='blue', 
-            fill_opacity=0.7
+        for i in range(0, len(markets)):
+        folium.Marker(
+            location=[markets.iloc[i]['Latitude'], markets.iloc[i]['Longitude']],
+            icon=BeautifyIcon(
+                icon='star',
+                inner_icon_style='color:yellow;font-size:9px;',
+                background_color='transparent',
+                border_color='transparent')
         ).add_to(m)
 ```
 <br>
