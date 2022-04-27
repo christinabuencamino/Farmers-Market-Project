@@ -69,7 +69,7 @@ Here is a closer look at downtown Manhattan, which contains the highest median z
 ![manhattan](https://user-images.githubusercontent.com/66935005/165587283-30026112-2ce9-4f96-98d6-2a11b1742119.png)
 
 <br>
-Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.
+Finally, I combined both maps in order ot visually see the breakdown of farmer's market location versus median income.<br>
 
 ![Improved_Median_Map](https://user-images.githubusercontent.com/66935005/165586569-26571397-36ec-4513-a225-5795e4c0cbbe.png)
 <br><br>
