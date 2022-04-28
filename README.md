@@ -26,7 +26,7 @@ def CreateFarmersMap(csv):
     
     # Create map
     m = folium.Map(location=[40.74, -73.96356241384754], zoom_start=11.5)
-    folium.TileLayer('stamentoner').add_to(m) # black and white filter
+    folium.TileLayer('cartodbpositron').add_to(m) 
     
     # Create NYC zip code borders from geojson data
     m.choropleth(geo_data='ZipCodeGeo.json', line_color='black',
@@ -61,7 +61,7 @@ def CreateMedianChoropleth():
 
     # Create map using geojson data boundaries to connect with zip codes from csv, and coloring based on income
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
-    folium.TileLayer('cartodbpositron').add_to(m)  # Black and white filter
+    folium.TileLayer('cartodbpositron').add_to(m) 
     m.choropleth(geo_data='ZipCodeGeo.json', fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
                  data=medianData,
                  threshold_scale = [0, 10276, 41775, 89075, 170050, 215950, 250001],
