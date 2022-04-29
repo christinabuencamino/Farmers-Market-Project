@@ -250,6 +250,26 @@ With this model, there is not much to conclude besides the fact that there is we
 
 ![https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png](https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png)
 
+```python
+def CreateMiddleBar():
+    combined_df = pd.read_csv('out.csv')
+    combined_df = combined_df[combined_df['Market_Present'] == 1]
+
+    # Categorize data into tax brackets
+    taxes = [0, 10276, 41775, 89075, 170050, 215950, 250001]
+    labels = ['$0 - $10276', '$10276 - $41775', '$41775 - $89075', '$89075 - $170050', '$170050 - $215950', '215950+']
+    combined_df['Tax_Bracket'] = pd.cut(combined_df['S1903_C03_001E'], taxes, labels=labels, ordered=False)
+
+    combined_df['Middle_Tax'] = 'Yes'
+    combined_df.loc[combined_df['Tax_Bracket'] != '$41775 - $89075', 'Middle_Tax'] = 'No'
+
+    b = combined_df['Middle_Tax'].value_counts().to_frame()
+    b.reset_index(inplace=True)
+    b = b.rename(columns={'index':'Within Middle Income', 'Middle_Tax':'Number Of Zip Codes'})
+
+    x = b.plot.bar(x='Within Middle Income', y='Number Of Zip Codes', rot=0, color='salmon')
+```
+
 <br>
 As we can see, the split in data is much more even, and so I will attempt to make predictions with this new categorized data.
 <br>
