@@ -195,6 +195,7 @@ def GenerateTaxPlot():
 From this graph, we can see that farmer's markets tend to target the second and third brackets the most, placing a majority of them between roughly $10,000 - $90,000 median income zip codes. However, this cannot be accepted as the final result, since there are more zip codes that fall into this range than out of it, thus increasing the probability of a market ending up here. Because of this, I proceeded to make a double bar histogram to compare the amount of zip codes and farmer's markets per tax bracket:
 <br>
 
+![DoubleBar](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
 
 <br>
 ## Model Prediction
