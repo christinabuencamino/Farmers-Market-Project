@@ -236,7 +236,7 @@ def LogReg():
 ```
 
 <br>
-Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble negative prediction line produced by the regression. When printing the accuracy, it is very low:
+Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble negative prediction line produced by the regression. When printing the accuracy, it is very low:<br>
 
 ```python
     y_pred = lr.predict_proba(X_test)
