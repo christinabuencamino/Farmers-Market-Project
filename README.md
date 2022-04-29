@@ -143,9 +143,9 @@ def GenerateBarPlot(market_csv):
     plt.show()
 ```
 <br>
-Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island**, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
+Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
 <br><br>
-To visualize the distribution of markets in specific zip codes, I categorized each zip code's median income into the federal income tax brackets:<br>
+To visualize the distribution of markets in specific zip codes, I categorized the data into federal income tax brackets to see if there was an obvious distribution:<br>
 
 ![Tax_Brackets](https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png)
 
@@ -192,23 +192,13 @@ def GenerateTaxPlot():
     ax.set_title("Number Of Markets Per Zip Code's Tax Bracket In NYC")
 ```
 <br>
-** I would like to note that Staten Island is a powerful outlier, and therefore I will be making observations with and without it. As a native Staten Islander, I understand that Staten Island has a large disconnect from the rest of NYC, so trends that exist in the other four boroughs may not apply to Staten Island due to large transportation, distance, and environmental differences. However, it is still a borough, so of course I will be including it in my research!
+From this graph, we can see that farmer's markets tend to target the second and third brackets the most, placing a majority of them between roughly $10,000 - $90,000 median income zip codes. However, this cannot be accepted as the final result, since there are more zip codes that fall into this range than out of it, thus increasing the probability of a market ending up here. Because of this, I proceeded to make a double bar histogram to compare the amount of zip codes and farmer's markets per tax bracket:
+<br>
+
+
 <br>
 ## Model Prediction
-Predicting my specific data is not as straightforward since it is simply location based. If I had more time, I would read up on Time Series forecasting and other methods of prediction not focused on in class, so that I could find a model that truly fits my data. In the mean time, however, I attempted to use Logistic Regression in order to make predictions, since I can treat the presence of a farmer's market as a boolean value. Logistic Regression supports boolean prediction, so let's go from there.
+Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code. However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class, such as Time Series forecasting which was recommended to me. I would also consider broadening my data so I would have more to work with. With that out of the way, let's move on to the analysis!
 <br><br>
-First I made a regular plot of my data. The curve shows there is more markets in the lower tax brackets.<br>
 
-![Reg_Plot](https://user-images.githubusercontent.com/66935005/165627627-4bf2e26a-0363-4645-9033-88da9f7921b5.png)
-
-```python
-# Using same data cleaning as before
-y_data = graph_data['Market_Present']
-x_data = graph_data['S1903_C03_001E']
-
-plot = sns.regplot(x=x_data, y=y_data, data=graph_data, logistic=True, ci=None, y_jitter=0.02)
-plot.set_xlabel('Median Income Of NYC Zip Codes (Ascending)')
-plot.set_ylabel('Market Present')
-plot.set_title("Farmer's Market Distribution Amongst NYC Zip Codes")
-```
 
