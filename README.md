@@ -192,88 +192,85 @@ def GenerateTaxPlot():
     ax.set_title("Number Of Markets Per Zip Code's Tax Bracket In NYC")
 ```
 <br>
-From this graph, we can see that farmer's markets tend to target the second and third brackets the most, placing a majority of them between roughly $10,000 - $90,000 median income zip codes. However, this cannot be accepted as the final result, since there are more zip codes that fall into this range than out of it, thus increasing the probability of a market ending up here. Because of this, I proceeded to make a double bar histogram to compare the amount of zip codes and farmer's markets per tax bracket:
+From this graph, we can see that farmer's markets tend to target the second and third brackets the most, placing a majority of them between roughly $10,000 - $90,000 median income zip codes. This makes sense, since a majority of the zip codes in New York City belong to these two brackets. To confirm this, I proceeded to make a double bar histogram to compare the amount of zip codes and farmer's markets per tax bracket:
 <br>
 
 ![https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
 
 <br>
-As we can see, the amount of zip codes located in the central tax bracket is overwhelming compared to the other zip codes. Therefore, it would be unfair to claim that the markets target a specific income based off of NYC data. To try to gain a better perspective, I moved on to predicive modeling.
+As we can see, a majority of these zip codes are encompassed in these two brackets, which offsets the data. It would be unfair to draw the conclusion that farmer's markets "target" certain income zones, since the distribution of zip codes by tax bracket is heavily skewed.
 <br>
-## Model Prediction Part 1
-Note: Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class, such as Time Series forecasting which was recommended to me. I would also consider broadening my data so I would have more to work with. 
+## Model Prediction
+**Note**: Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class. I would also definitely broaden my data so I would have more to work with, and thus more to analyze.
 <br>
-To begin, I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this was the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
+I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this seemed to be the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
 
 ![https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
 
 ```python
-def LogReg():
-    combined_df = CombineMedianMarket()
+def LogRegAndConfMatrix():
+    combined_df = pd.read_csv("out.csv")  # saved the combined df to not overload geopy + save time
 
-    X = combined_df[['S1903_C03_001E']].to_numpy()
+    X = combined_df[['S1903_C03_001E']]
     y = combined_df['Market_Present'].to_numpy()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=66, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.2, random_state=42)
 
     lr = LogisticRegression()
     lr.fit(X_train, y_train)
+
+    # print(lr.score(X_test, y_test))
+
+    y_pred = lr.predict(X_test)
 
     p = sns.lmplot(
         x='S1903_C03_001E', y='Market_Present',
         data=combined_df,
         fit_reg=False, ci=False,
         y_jitter=0.01,
-        scatter_kws={'alpha':0.3},
+        scatter_kws={'alpha': 0.3},
         palette='flare',
 
     )
     p = (p.set_axis_labels("Median Income Per NYC Zip Code", "Market Present"))
     xs = np.linspace(-2, 250002, 100)
-    ys = lr.predict_proba(xs.reshape(-1,1))[:,1]
+    ys = lr.predict_proba(xs.reshape(-1, 1))[:, 1]
     plt.plot(xs, ys)
     plt.title("Logistic Regression Of Median Income Versus Market Present")
+    plt.show()
 ```
 
 <br>
-Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble negative prediction line produced by the regression. When printing the accuracy, it is very low:<br>
+Due to the small size of the data, there was not a lot for the model to work with and create a good prediction. There is a very slight negative prediction, to the point where it could be negligible. As seen below, it is not very accurate either:<br>
 
 ```python
-    y_pred = lr.predict_proba(X_test)
+    y_pred = lr.predict(X_test)
     print('Accuracy of logistic regression: {:.2f}'.format(lr.score(X_test, y_test)))
     
-    # Prints: Accuracy of logistic regression: 0.58
+    # Prints: Accuracy of logistic regression: 0.53
 ```
 
 <br>
-With this model, there is not much to conclude besides the fact that there is weak correlation, although this could be due to the small amount of data and the way it is distributed thanks to the economic make up of New York City. In order to see other data views, I also decided to divide the data between being in the middle tax bracket (which contains the most farmer's market), and being out of it. Originally, I was going to divide the data by economic class, but because middle class is defined as being in between $10,000 and $90,000 (2019), a vast majority of markets would fall into "middle class" placements, rendering any data analysis pointless. Dividing by tax brackets was the next logical step, since there is enough of a split between the middle tax bracket and outside tax brackets. To demonstrate the splot in data, I generated this bar graph:<br>
+The confusion matrix that is produced from this analysis is as follows:<br>
 
-![https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png](https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png)
+![https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png](https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png)
 
 ```python
-def CreateMiddleBar():
-    combined_df = pd.read_csv('out.csv')
-    combined_df = combined_df[combined_df['Market_Present'] == 1]
+    ax = sns.heatmap(cm, annot=True, cmap='Blues')
 
-    # Categorize data into tax brackets
-    taxes = [0, 10276, 41775, 89075, 170050, 215950, 250001]
-    labels = ['$0 - $10276', '$10276 - $41775', '$41775 - $89075', '$89075 - $170050', '$170050 - $215950', '215950+']
-    combined_df['Tax_Bracket'] = pd.cut(combined_df['S1903_C03_001E'], taxes, labels=labels, ordered=False)
+    ax.set_title('Confusion Matrix\n\n')
+    ax.set_xlabel('\nPredicted Values')
+    ax.set_ylabel('Actual Values ')
 
-    combined_df['Middle_Tax'] = 'Yes'
-    combined_df.loc[combined_df['Tax_Bracket'] != '$41775 - $89075', 'Middle_Tax'] = 'No'
+    ax.xaxis.set_ticklabels(['False', 'True'])
+    ax.yaxis.set_ticklabels(['False', 'True'])
 
-    b = combined_df['Middle_Tax'].value_counts().to_frame()
-    b.reset_index(inplace=True)
-    b = b.rename(columns={'index':'Within Middle Income', 'Middle_Tax':'Number Of Zip Codes'})
-
-    x = b.plot.bar(x='Within Middle Income', y='Number Of Zip Codes', rot=0, color='salmon')
+    plt.show()
 ```
+<br>
+With this model, there is not much to conclude besides that this model does not fit the data well. The confusion matrix shows almost an even split between correctly guessed predictions versus incorrect, which goes along with the 53% accuracy rate. I wouldn't necessarily claim that there's a "perfect" predictive model for this data - rather, the data requires other numerical categories and the perspective of this project needs to be adjusted. There are too many clashing variables that get in the way of accurate predictive modeling, such as the skew towards the middle tax bracket, the make up of NYC, the low number of farmer's markets compared to the number of zipcodes, and the lack of overall data categories. When I come back to this project, I intend to reframe my original question in order to include numerical data, such as "does the median income of a zip code predict the _revenue_ of a farmer's market", or different methods of analyzing how the populations of these zip codes interact with the farmer's markets (depending on the data sets online, of course). This definitely helped me understand how important figuring out the scope of your data and research question is when developing a project.
 
 <br>
-As we can see, the split in data is much more even, and so I will attempt to make predictions with this new categorized data.
-<br>
-## Model Prediction Part 2
 
 ## Resources
 **Market data**: https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data<br>
