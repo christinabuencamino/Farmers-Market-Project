@@ -374,8 +374,13 @@ When I come back to this project, I intend to reframe my original question in or
 **Regex help**: https://stackoverflow.com/questions/53962844/applying-regex-across-entire-column-of-a-dataframe<br>
 **Pandas**: https://groups.google.com/g/pyqtgraph/c/trmr_5dV6Uc?pli=1<br>
 **Logistic Reg**: http://www.textbook.ds100.org/ch/24/classification_log_reg.html<br>
+https://www.justintodata.com/logistic-regression-example-in-python/<br>
+https://machinelearningmastery.com/make-predictions-scikit-learn/<br>
 **Confusion Matrix**: https://www.stackvidhya.com/plot-confusion-matrix-in-python-and-why/<br>
-Data science textbook<br>
+https://realpython.com/logistic-regression-python/<br>
+https://datascienceplus.com/building-a-logistic-regression-in-python-step-by-step/<br>
+Data science 100 textbook<br>
+Sklearn documentation<br>
 
 ## Thank you for reading!!
 
