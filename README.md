@@ -118,7 +118,7 @@ Looking at this map, I was unable to see a clear trend in the data, so I moved o
 I wanted to look at a more general breakdown of the distribution of markets across NYC in order to see if there is a correlation purely from that. To begin this process, I made a bar plot of markets per borough, as seen below.
 <br>
 
-![Borough_Bar_Plot](https://user-images.githubusercontent.com/66935005/165559362-b55e017d-56e9-4b7d-bfa3-f44f57d2511c.png)
+![https://user-images.githubusercontent.com/66935005/165559362-b55e017d-56e9-4b7d-bfa3-f44f57d2511c.png](https://user-images.githubusercontent.com/66935005/165559362-b55e017d-56e9-4b7d-bfa3-f44f57d2511c.png)
 
 
 ```python
@@ -147,7 +147,7 @@ Coupling this with the [U.S. Census Bureau's median income facts per borough](ht
 <br><br>
 To visualize the distribution of markets in specific zip codes, I categorized the data into federal income tax brackets to see if there was an obvious distribution:<br>
 
-![Tax_Brackets](https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png)
+![https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png](https://user-images.githubusercontent.com/66935005/165646579-32deb3e2-63f9-4708-a414-3e27a2784d01.png)
 
 
 ```python
@@ -195,7 +195,7 @@ def GenerateTaxPlot():
 From this graph, we can see that farmer's markets tend to target the second and third brackets the most, placing a majority of them between roughly $10,000 - $90,000 median income zip codes. However, this cannot be accepted as the final result, since there are more zip codes that fall into this range than out of it, thus increasing the probability of a market ending up here. Because of this, I proceeded to make a double bar histogram to compare the amount of zip codes and farmer's markets per tax bracket:
 <br>
 
-![DoubleBar](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
+![https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
 
 <br>
 As we can see, the amount of zip codes located in the central tax bracket is overwhelming compared to the other zip codes. Therefore, it would be unfair to claim that the markets target a specific income based off of NYC data. To try to gain a better perspective, I moved on to predicive modeling.
@@ -205,7 +205,7 @@ Note: Unfortunately, due to the nature of my data and the amount of time I had t
 <br>
 To begin, I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this was the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
 
-![LogReg](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
+![https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
 
 ```python
 def LogReg():
@@ -248,7 +248,7 @@ Due to the dataset not having a lot of values, and the lack of variance as seen 
 <br>
 With this model, there is not much to conclude besides the fact that there is weak correlation, although this could be due to the small amount of data and the way it is distributed thanks to the economic make up of New York City. In order to see other data views, I also decided to divide the data between being in the middle tax bracket (which contains the most farmer's market), and being out of it. Originally, I was going to divide the data by economic class, but because middle class is defined as being in between $10,000 and $90,000 (2019), a vast majority of markets would fall into "middle class" placements, rendering any data analysis pointless. Dividing by tax brackets was the next logical step, since there is enough of a split between the middle tax bracket and outside tax brackets. To demonstrate the splot in data, I generated this bar graph:<br>
 
-![Middle_Income_Bar](https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png)
+![https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png](https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png)
 
 <br>
 As we can see, the split in data is much more even, and so I will attempt to make predictions with this new categorized data.
