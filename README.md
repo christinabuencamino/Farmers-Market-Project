@@ -290,3 +290,5 @@ With this model, there is not much to conclude besides that this model does not 
 **Logistic Reg**: http://www.textbook.ds100.org/ch/24/classification_log_reg.html<br>
 Data science textbook<br>
 
+## Thank you for reading!
+
