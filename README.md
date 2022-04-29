@@ -256,20 +256,20 @@ As we can see, the split in data is much more even, and so I will attempt to mak
 ## Model Prediction Part 2
 
 ## Resources
-Market data: https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data<br>
-GeoJSON data: https://data.beta.nyc/dataset/nyc-zip-code-tabulation-areas/resource/6df127b1-6d04-4bb7-b983-07402a2c3f90<br>
+**Market data**: https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data<br>
+**GeoJSON data**: https://data.beta.nyc/dataset/nyc-zip-code-tabulation-areas/resource/6df127b1-6d04-4bb7-b983-07402a2c3f90<br>
     https://github.com/fedhere/PUI2015_EC/blob/master/mam1612_EC/nyc-zip-code-tabulation-areas-polygons.geojson<br>
-GeoJSON help: https://stjohn.github.io/teaching/seminar4/s17/cw6.html<br>
-Folium help: https://medium.com/@meganlyons_79212/creating-maps-with-folium-baa6ff0f5c44<br>
+**GeoJSON help**: https://stjohn.github.io/teaching/seminar4/s17/cw6.html<br>
+**Folium help**: https://medium.com/@meganlyons_79212/creating-maps-with-folium-baa6ff0f5c44<br>
     https://levelup.gitconnected.com/visualizing-housing-data-with-folium-maps-4718ed3452c2<br>
     https://medium.com/@saidakbarp/interactive-map-visualization-with-folium-in-python-2e95544d8d9b<br>
     https://towardsdatascience.com/visualizing-data-at-the-zip-code-level-with-folium-d07ac983db20<br>
     https://medium.com/datadream/mapping-with-folium-a-tale-of-3-cities-8e5ab7f4e53d<br>
     https://github.com/python-visualization/folium/issues/1404<br>
-Geopy help: https://www.geeksforgeeks.org/get-zip-code-with-given-location-using-geopy-in-python/<br>
-Credit for zip code help: https://gis.stackexchange.com/questions/352961/convert-lat-lon-to-zip-postal-code-using-python<br>
-Regex help: https://stackoverflow.com/questions/53962844/applying-regex-across-entire-column-of-a-dataframe<br>
-Pandas: https://groups.google.com/g/pyqtgraph/c/trmr_5dV6Uc?pli=1<br>
-Logistic Reg: http://www.textbook.ds100.org/ch/24/classification_log_reg.html<br>
+**Geopy help**: https://www.geeksforgeeks.org/get-zip-code-with-given-location-using-geopy-in-python/<br>
+**Credit for zip code help**: https://gis.stackexchange.com/questions/352961/convert-lat-lon-to-zip-postal-code-using-python<br>
+**Regex help**: https://stackoverflow.com/questions/53962844/applying-regex-across-entire-column-of-a-dataframe<br>
+**Pandas**: https://groups.google.com/g/pyqtgraph/c/trmr_5dV6Uc?pli=1<br>
+**Logistic Reg**: http://www.textbook.ds100.org/ch/24/classification_log_reg.html<br>
 Data science textbook<br>
 
