@@ -237,11 +237,15 @@ def LogReg():
 
 <br>
 Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble negative prediction line produced by the regression. When printing the accuracy, it is very low:
+
 ```python
     y_pred = lr.predict_proba(X_test)
     print('Accuracy of logistic regression: {:.2f}'.format(lr.score(X_test, y_test)))
     
     # Prints: Accuracy of logistic regression: 0.58
 ```
+
 <br>
-With this conclusion, we can see that the data is not very demonstrative of any type of correlation.
+With this model, there is not much to conclude besides the fact that there is weak correlation, although this could be due to the small amount of data and the way it is distributed thanks to the economic make up of New York City. In order to see other data views, I also decided to divide the data between being in the middle tax bracket (which contains the most farmer's market), and being out of it. Originally, I was going to divide the data by economic class, but because middle class is defined as being in between $10,000 and $90,000 (2019), a vast majority of markets would fall into "middle class" placements, rendering any data analysis pointless. Dividing by tax brackets was the next logical step, since there is enough of a split between the middle tax bracket and outside tax brackets.
+<br>
+
