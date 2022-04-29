@@ -207,5 +207,33 @@ To begin, I ran a logistic regression on the data and plotted the results. From 
 
 ![LogReg](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
 
+```python
+def LogReg():
+    combined_df = CombineMedianMarket()
+
+    X = combined_df[['S1903_C03_001E']].to_numpy()
+    y = combined_df['Market_Present'].to_numpy()
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=66, random_state=42)
+
+    lr = LogisticRegression()
+    lr.fit(X_train, y_train)
+
+    p = sns.lmplot(
+        x='S1903_C03_001E', y='Market_Present',
+        data=combined_df,
+        fit_reg=False, ci=False,
+        y_jitter=0.01,
+        scatter_kws={'alpha':0.3},
+        palette='flare',
+
+    )
+    p = (p.set_axis_labels("Median Income Per NYC Zip Code", "Market Present"))
+    xs = np.linspace(-2, 250002, 100)
+    ys = lr.predict_proba(xs.reshape(-1,1))[:,1]
+    plt.plot(xs, ys)
+    plt.title("Logistic Regression Of Median Income Versus Market Present")
+```
+
 <br>
 Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble prediction line produced by the regression. 
