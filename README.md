@@ -23,6 +23,7 @@ def get_zipcode(df, geolocator, lat, lon):
     location = geolocator.reverse((df[lat], df[lon]))
     return location.raw['address']['postcode']
 
+
 '''
 Generates series of farmer's market zipcodes using geopy's Nominatim
 '''
@@ -131,26 +132,21 @@ Next, I created a chloropleth map of the ranges of median incomes in NYC using t
 
 ```python
 def CreateMedianChoropleth():
-    # Read in csv and clean up data
-    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
-    medianData = medianData.dropna()
-    medianData = medianData.drop([0]) # Drop row of column headers
-    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']] # Reformat zip codes
-    medianData['NAME'] = medianData['NAME'].astype('str')
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
+    median_data = CreateMedianData()
 
     # Create map using geojson data boundaries to connect with zip codes from csv, and coloring based on income
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
-    folium.TileLayer('cartodbpositron').add_to(m) 
+    folium.TileLayer('cartodbpositron').add_to(m)
     m.choropleth(geo_data='ZipCodeGeo.json', fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
-                 data=medianData,
+                 data=median_data,
                  threshold_scale = [0, 10276, 41775, 89075, 170050, 215950, 250001],
                  key_on='feature.properties.postalCode',
                  columns=['NAME', 'S1903_C03_001E'],
                  nan_fill_color='white',
                  legend_name='Median Income')
+
+    # m.save()
+    # webbrowser.open()
 ```
 
 Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
@@ -159,25 +155,18 @@ Finally, I combined both maps in order to visually see the breakdown of farmer's
 
 
 ```python
-    # Read in csv and clean up data
-    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
-    medianData = medianData.dropna()
-    medianData = medianData.drop([0])
-    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']]
-    medianData['NAME'] = medianData['NAME'].astype('str')
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
+def CreateMedianMarketMap():
+    median_data = CreateMedianData()
 
     # Create map, now with choropleth shading and also market markers
     m = folium.Map(location=[40.75, -74], zoom_start=11.4)
     folium.TileLayer('cartodbpositron').add_to(m)
     m.choropleth(geo_data='ZipCodeGeo.json',
-                        fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
-                        data=medianData,
-                        key_on='feature.properties.postalCode',
-                        columns=['NAME', 'S1903_C03_001E'],
-                        legend_name='Median Income')
+                 fill_color='YlGnBu', fill_opacity=0.9, line_opacity=0.5,
+                 data=median_data,
+                 key_on='feature.properties.postalCode',
+                 columns=['NAME', 'S1903_C03_001E'],
+                 legend_name='Median Income')
 
     cols_kept = ['Latitude', 'Longitude']
     markets = pd.read_csv('DOHMH_Farmers_Markets.csv', usecols=cols_kept)
@@ -203,13 +192,14 @@ I wanted to look at a more general breakdown of the distribution of markets acro
 
 
 ```python
-def GenerateBarPlot(market_csv):
+def GenerateBoroughBarPlot(market_csv):
     # Cleanup farmer's market csv
     market = pd.read_csv(market_csv)
-    market = market['Borough'].value_counts().reset_index(inplace=False)  # Create dataframe of each borough and their count of markets
+    market = market['Borough'].value_counts().reset_index(
+        inplace=False)  # Create dataframe of each borough and their count of markets
     market.columns = ["Borough", "Number of Farmer's Markets"]
     boroughs = market
-    
+
     # Generate bar plot
     f, ax = plt.subplots(figsize=(6, 15))
     sns.set_color_codes("pastel")
@@ -235,34 +225,17 @@ To visualize the distribution of markets in specific zip codes, I categorized th
 
 ```python
 def GenerateTaxPlot():
-    # Call function to generate zip codes for markets
-    zipcodes = GenerateZipCode()
-    zipcodes = zipcodes.astype(int)
-
-    # Clean up median income csv
-    medianData = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
-    medianData = medianData.dropna()
-    medianData = medianData.drop([0])
-    medianData['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in medianData['NAME']]
-    medianData['NAME'] = medianData['NAME'].astype('int')
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("-", "0")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].replace("250,000+", "250000")
-    medianData['S1903_C03_001E'] = medianData['S1903_C03_001E'].astype('float')
-
-    # Merge market data and median income data, and isolate only zip codes that have markets
-    graph_data = medianData.merge(zipcodes, left_on='NAME', right_on='Market_Present', how='left')
-    graph_data.Market_Present = graph_data.Market_Present.notnull().astype(int)
-    graph_data = graph_data.sort_values(by=['S1903_C03_001E'])
-    graph_data = graph_data[graph_data['Market_Present'] == 1]
-    graph_data = graph_data[graph_data['S1903_C03_001E'] != 0]
+    # Get graph data and isolate zip codes with markets
+    combined_df = CombineMedianMarket()
+    combined_df = combined_df[combined_df['Market_Present'] == 1]
 
     # Categorize data into tax brackets
     taxes = [0, 10276, 41775, 89075, 170050, 215950, 250001]
     labels = ['$0 - $10276', '$10276 - $41775', '$41775 - $89075', '$89075 - $170050', '$170050 - $215950', '215950+']
-    graph_data['Tax_Bracket'] = pd.cut(graph_data['S1903_C03_001E'], taxes, labels=labels, ordered=False)
+    combined_df['Tax_Bracket'] = pd.cut(combined_df['S1903_C03_001E'], taxes, labels=labels, ordered=False)
 
     # Fix indexing
-    brackets = graph_data['Tax_Bracket'].value_counts().to_frame()
+    brackets = combined_df['Tax_Bracket'].value_counts().to_frame()
     brackets = brackets.reindex(labels)
 
     # Create bar plot
@@ -279,6 +252,39 @@ From this graph, we can see that farmer's markets tend to target the second and 
 <br>
 
 ![https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
+
+```python
+def GenerateDoubleBar():
+    combined_df = CombineMedianMarket()
+
+    # Create tax bracket column
+    taxes = [0, 10276, 41775, 89075, 170050, 215950, 250001]
+    labels = ['$0 - $10276', '$10276 - $41775', '$41775 - $89075', '$89075 - $170050', '$170050 - $215950', '215950+']
+    combined_df['Tax_Bracket'] = pd.cut(combined_df['S1903_C03_001E'], taxes, labels=labels, ordered=False)
+
+    # Get count of each tax bracket no matter if there is a farmer's market
+    tax_df = combined_df.groupby(['Tax_Bracket']).count()
+    tax_df.reset_index(inplace=True)
+    tax_df = tax_df[['Tax_Bracket', 'NAME']]
+
+    # Get count of each tax bracket, with only zip codes that have a farmer's market
+    markets = combined_df[combined_df['Market_Present'] == 1].groupby(['Tax_Bracket']).count()
+    markets.reset_index(inplace=True)
+    markets = markets[['Tax_Bracket', 'Market_Present']]
+
+    # Merge data to have with/without market data in same df
+    merged = pd.merge(tax_df, markets, on='Tax_Bracket')
+
+    # Create bar graph
+    ax = merged.plot(x='Tax_Bracket', y=['NAME', 'Market_Present'], kind='bar', color=['salmon', 'lightgreen'])
+    ax.set_xlabel('Tax Bracket')
+    ax.set_ylabel('Number Of Occurrences')
+    ax.set_title("Number Of Zip Codes And Farmer's Markets Per Tax Bracket In NYC")
+    plt.xticks(rotation=30)
+    ax.legend(["Zip Codes", "Farmer's Markets"])
+
+    plt.show()
+```
 
 <br>
 As we can see, a majority of these zip codes are encompassed in these two brackets, which offsets the data. It would be unfair to draw the conclusion that farmer's markets "target" certain income zones, since the distribution of zip codes by tax bracket is heavily skewed.
@@ -327,6 +333,8 @@ def LogRegAndConfMatrix():
 Due to the small size of the data, there was not a lot for the model to work with and it could not create a good prediction. There is a very slight negative prediction, to the point where it could be negligible. As seen below, it is not very accurate either:<br>
 
 ```python
+    # ...Continued from LogRegAndConfMatrix()
+    
     y_pred = lr.predict(X_test)
     print('Accuracy of logistic regression: {:.2f}'.format(lr.score(X_test, y_test)))
     
@@ -339,6 +347,8 @@ The confusion matrix that is produced from this analysis is as follows:<br>
 ![https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png](https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png)
 
 ```python
+    # ...Continued from LogRegAndConfMatrix()
+
     ax = sns.heatmap(cm, annot=True, cmap='Blues')
 
     ax.set_title('Confusion Matrix\n\n')
