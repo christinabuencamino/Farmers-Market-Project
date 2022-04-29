@@ -351,7 +351,12 @@ The confusion matrix that is produced from this analysis is as follows:<br>
     plt.show()
 ```
 <br>
-With this model, there is not much to conclude besides that this model does not fit the data well. The confusion matrix shows almost an even split between correctly guessed predictions versus incorrect, which goes along with the 53% accuracy rate. I wouldn't necessarily claim that there's a "perfect" predictive model for this data - rather, the data requires other numerical categories and the perspective of this project needs to be adjusted. There are too many clashing variables that get in the way of accurate predictive modeling, such as the skew towards the middle tax bracket, the make up of NYC, the low number of farmer's markets compared to the number of zipcodes, and the lack of overall data categories. When I come back to this project, I intend to reframe my original question in order to include numerical data, such as "does the median income of a zip code predict the _revenue_ of a farmer's market", or different methods of analyzing how the populations of these zip codes interact with the farmer's markets (depending on the data sets online, of course). This definitely helped me understand how important figuring out the scope of your data and research question is when developing a project.
+With this model, there is not much to conclude besides that this model does not fit the data well. The confusion matrix shows almost an even split between correctly guessed predictions versus incorrect, which goes along with the 53% accuracy rate. 
+
+## Final Thoughts
+I wouldn't necessarily claim that there's a "perfect" predictive model for this data - rather, the data requires other numerical categories and the perspective of this project needs to be adjusted. There are too many clashing variables that get in the way of accurate predictive modeling, such as the skew towards the middle tax bracket, the make up of NYC, the low number of farmer's markets compared to the number of zipcodes, and the lack of overall data categories. Even when I tried to split the data in other ways (middle class versus not middle class, for example), I did not notice any noteworthy changes in the calculations. 
+<br><br>
+When I come back to this project, I intend to reframe my original question in order to include numerical data, such as "does the median income of a zip code predict the _revenue_ of a farmer's market", or different methods of analyzing how the populations of these zip codes interact with the farmer's markets (depending on the data sets online, of course). This definitely helped me understand how important figuring out the scope of your data and research question is when developing a project.
 
 ## Resources
 **Market data**: https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data<br>
@@ -371,5 +376,5 @@ With this model, there is not much to conclude besides that this model does not 
 **Logistic Reg**: http://www.textbook.ds100.org/ch/24/classification_log_reg.html<br>
 Data science textbook<br>
 
-## Thank you for reading!
+## Thank you for reading!!
 
