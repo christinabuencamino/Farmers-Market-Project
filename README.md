@@ -200,7 +200,7 @@ From this graph, we can see that farmer's markets tend to target the second and 
 <br>
 As we can see, the amount of zip codes located in the central tax bracket is overwhelming compared to the other zip codes. Therefore, it would be unfair to claim that the markets target a specific income based off of NYC data. To try to gain a better perspective, I moved on to predicive modeling.
 <br>
-## Model Prediction
+## Model Prediction Part 1
 Note: Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class, such as Time Series forecasting which was recommended to me. I would also consider broadening my data so I would have more to work with. 
 <br>
 To begin, I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this was the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
@@ -246,6 +246,12 @@ Due to the dataset not having a lot of values, and the lack of variance as seen 
 ```
 
 <br>
-With this model, there is not much to conclude besides the fact that there is weak correlation, although this could be due to the small amount of data and the way it is distributed thanks to the economic make up of New York City. In order to see other data views, I also decided to divide the data between being in the middle tax bracket (which contains the most farmer's market), and being out of it. Originally, I was going to divide the data by economic class, but because middle class is defined as being in between $10,000 and $90,000 (2019), a vast majority of markets would fall into "middle class" placements, rendering any data analysis pointless. Dividing by tax brackets was the next logical step, since there is enough of a split between the middle tax bracket and outside tax brackets.
+With this model, there is not much to conclude besides the fact that there is weak correlation, although this could be due to the small amount of data and the way it is distributed thanks to the economic make up of New York City. In order to see other data views, I also decided to divide the data between being in the middle tax bracket (which contains the most farmer's market), and being out of it. Originally, I was going to divide the data by economic class, but because middle class is defined as being in between $10,000 and $90,000 (2019), a vast majority of markets would fall into "middle class" placements, rendering any data analysis pointless. Dividing by tax brackets was the next logical step, since there is enough of a split between the middle tax bracket and outside tax brackets. To demonstrate the splot in data, I generated this bar graph:<br>
+
+![Middle_Income_Bar](https://user-images.githubusercontent.com/66935005/166001272-5b81d781-67e2-4fd1-9cc9-ad744e1b672a.png)
+
 <br>
+As we can see, the split in data is much more even, and so I will attempt to make predictions with this new categorized data.
+<br>
+## Model Prediction Part 2
 
