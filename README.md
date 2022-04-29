@@ -32,6 +32,8 @@ def GenerateZipCode():
     cols_kept = ['Borough', 'Market Name', 'Street Address', 'Latitude', 'Longitude']
     markets = pd.read_csv("DOHMH_Farmers_Markets.csv", usecols=cols_kept)
 
+    # I had to split this into three calls because one call would time out geopy
+    # For testing, I saved this csv and called my local file
     markets_1 = markets.iloc[:50,:]
     zipcodes_1 = markets_1.apply(get_zipcode, axis=1, geolocator=locator, 
         lat='Latitude', lon='Longitude')
