@@ -198,8 +198,14 @@ From this graph, we can see that farmer's markets tend to target the second and 
 ![DoubleBar](https://user-images.githubusercontent.com/66935005/165875235-70179c9d-cc1b-4de9-b010-d746e3590ed0.png)
 
 <br>
+As we can see, the amount of zip codes located in the central tax bracket is overwhelming compared to the other zip codes. Therefore, it would be unfair to claim that the markets target a specific income based off of NYC data. To try to gain a better perspctive, I moved on to predicive modeling.
+<br>
 ## Model Prediction
-Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code. However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class, such as Time Series forecasting which was recommended to me. I would also consider broadening my data so I would have more to work with. With that out of the way, let's move on to the analysis!
-<br><br>
+Note: Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class, such as Time Series forecasting which was recommended to me. I would also consider broadening my data so I would have more to work with. 
+<br>
+To begin, I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this was the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
 
+![LogReg](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
 
+<br>
+Due to the dataset not having a lot of values, and the lack of variance as seen from the tax bracket plots, there is a very slight, mostly negligble prediction line produced by the regression. 
