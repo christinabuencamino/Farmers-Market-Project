@@ -29,13 +29,10 @@ import folium
 from folium.plugins import BeautifyIcon
 from matplotlib import pyplot as plt
 import seaborn as sns
-from sklearn import preprocessing
-from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import confusion_matrix
 import numpy as np
-from sklearn.feature_extraction import DictVectorizer
 
 
 # Data creation/modification  ******************************************************************************************
