@@ -1,18 +1,100 @@
 # Does The Presence Of A Farmer's Market In A Zip Code Predict Resident Median Income?
 
 **Name**: Christina Buencamino<br>
-**Email**: christina.buencamino28@myhunter.cuny.edu | c.buencamino123@gmail.com (work)<br>
+**Email**: christina.buencamino28@myhunter.cuny.edu | c.buencamino123@gmail.com <br>
 **Resources**: Please see bottom of page.<br>
-**Abstract**: My final project aims to discover if there is a correlation between the median income of a zip code and how many (if any) farmer's markets station in said zip code. I used an OpenData CSV breakdown of NYC farmer's markets present in 2019, along with census data that shows the 2019 median income (in dollars) of zip codes in NYC.<br>
+**Abstract**: My final project aims to discover if there is a correlation between the median income of a NYC zip code and if a farmer's market shows up in said zip code. I used an OpenData CSV breakdown of NYC farmer's markets present in 2019, along with census data that shows the 2019 median income (in dollars) of zip codes in NYC.
 <br>
-[Github](https://github.com/christinabuencamino)
-<br>
-[LinkedIn](https://www.linkedin.com/in/christina-buencamino/)
+[Github](https://github.com/christinabuencamino) | [LinkedIn](https://www.linkedin.com/in/christina-buencamino/)
 <br>
 ## Initial Hypothesis & Notes
-My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.
+My initial hypothesis was that farmer's markets target higher income neighborhoods. My reasoning for this was mainly from personal experience, since the markets I have been to in NYC have had some pretty steep prices.<br>
 Additionally, I would like to disclose that I had to edit the farmer's market csv on lines 34 and 64 because the inputted coordinates were not accurate, so I replaced them with their respective coordinates as found on Google Maps.
 <br>
+## Common Functions
+Throughout my code blocks, there are references to functions that were defined to help build/clean up the data used so it could be analyzed in a cleaner way. Here are their definitions:<br>
+
+```python
+'''
+Helper function to call geolocator for calculating farmer's market zip codes.
+gis.stackexchange.com/questions/352961/convert-lat-lon-to-zip-postal-code-using-python
+'''
+def get_zipcode(df, geolocator, lat, lon):
+    location = geolocator.reverse((df[lat], df[lon]))
+    return location.raw['address']['postcode']
+
+'''
+Generates series of farmer's market zipcodes using geopy's Nominatim
+'''
+def GenerateZipCode():
+    locator = geopy.Nominatim(user_agent='my-project-for-DS-3')
+    cols_kept = ['Borough', 'Market Name', 'Street Address', 'Latitude', 'Longitude']
+    markets = pd.read_csv("DOHMH_Farmers_Markets.csv", usecols=cols_kept)
+
+    markets_1 = markets.iloc[:50,:]
+    zipcodes_1 = markets_1.apply(get_zipcode, axis=1, geolocator=locator, 
+        lat='Latitude', lon='Longitude')
+    zipcodes_1 = zipcodes_1.replace('112321', '11232')
+
+    markets_2 = markets.iloc[50:100,:]
+    zipcodes_2 = markets_2.apply(get_zipcode, axis=1, geolocator=locator, 
+        lat='Latitude', lon='Longitude')
+
+    markets_3 = markets.iloc[100:,:]
+    zipcodes_3 = markets_3.apply(get_zipcode, axis=1, geolocator=locator, 
+        lat='Latitude', lon='Longitude')
+
+    zipcodes = zipcodes_1.append(zipcodes_2)
+    zipcodes = zipcodes.append(zipcodes_3)
+
+    zipcodes.name = 'Market_Present'
+
+    return zipcodes
+
+
+'''
+Calls zip code and median_data functions and merges them together to create complete 
+dataframe for analysis.
+'''
+def CombineMedianMarket():
+    # Call function to generate zip codes for markets
+    zipcodes = GenerateZipCode()
+    zipcodes = zipcodes.astype(int)
+
+    # Clean up median income csv
+    median_data = CreateMedianData()
+
+    # Merge market data and median income data, and isolate only zip codes that have markets
+    combined_df = median_data.merge(zipcodes, left_on='NAME', right_on='Market_Present', how='left')
+    combined_df.Market_Present = combined_df.Market_Present.notnull().astype(int)
+    combined_df = combined_df.sort_values(by=['S1903_C03_001E'])
+    combined_df = combined_df[combined_df['S1903_C03_001E'] != 0]
+
+
+
+    return combined_df
+
+
+'''
+Cleans up Median income csv to only include zip code and 2019 median income per 
+zipcode, while fixing data types.
+'''
+def CreateMedianData():
+    # Read in csv and clean up data
+    median_data = pd.read_csv('MedianIncome.csv', usecols=['NAME', 'S1903_C03_001E'])
+    median_data = median_data.dropna()
+    median_data = median_data.drop([0]) # Drop row of column headers
+    median_data['NAME'] = [re.sub(r'ZCTA5 ', '', str(x)) for x in median_data['NAME']] # Reformat zip codes
+    median_data['NAME'] = median_data['NAME'].astype('int')
+    median_data['S1903_C03_001E'] = median_data['S1903_C03_001E'].replace("-", "0")
+    median_data['S1903_C03_001E'] = median_data['S1903_C03_001E'].replace("250,000+", "250000")
+    median_data['S1903_C03_001E'] = median_data['S1903_C03_001E'].astype('float')
+
+    return median_data
+
+```
+
+
 ## Mapping The Data
 To begin, I created a map of all of the farmer's markets in NYC using the [DOHMH Farmers Markets Open Data set](https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data).
 
@@ -70,7 +152,6 @@ def CreateMedianChoropleth():
                  nan_fill_color='white',
                  legend_name='Median Income')
 ```
-<br>
 
 Finally, I combined both maps in order to visually see the breakdown of farmer's market location versus median income.<br>
 
@@ -111,7 +192,7 @@ Finally, I combined both maps in order to visually see the breakdown of farmer's
                 border_color='transparent')
         ).add_to(m)
 ```
-<br>
+
 Looking at this map, I was unable to see a clear trend in the data, so I moved on to other means of data analysis.
 <br>
 ## Graphing The Data
@@ -143,7 +224,9 @@ def GenerateBarPlot(market_csv):
     plt.show()
 ```
 <br>
-Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot shows that there is not a strong correlation between the location of a farmer's market and borough income. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island, the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs. While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important.
+Coupling this with the [U.S. Census Bureau's median income facts per borough](https://www.census.gov/quickfacts/fact/table/queenscountynewyork,newyorkcountynewyork,bronxcountynewyork,kingscountynewyork,richmondcountynewyork/HSG010219), this bar plot does not support my original hypothesis, and rather supports the notion that farmer's markets target the middle class. Manhattan and Staten Island have the highest incomes, and while Manhattan has the second highest amount of Farmer's Markets, Staten Island has the least by a very large amount. Even if we were to not include Staten Island (due to just how few markets there are versus zip code), the next borough with the most amount of markets is the Bronx, which has the lowest income in comparison to the other boroughs.
+
+<br>While this does not support my original hypothesis, I must look deeper at individual zipcodes since every borough has zipcodes that range in median incomes, so the placement of these market's is important. 
 <br><br>
 To visualize the distribution of markets in specific zip codes, I categorized the data into federal income tax brackets to see if there was an obvious distribution:<br>
 
@@ -201,9 +284,9 @@ From this graph, we can see that farmer's markets tend to target the second and 
 As we can see, a majority of these zip codes are encompassed in these two brackets, which offsets the data. It would be unfair to draw the conclusion that farmer's markets "target" certain income zones, since the distribution of zip codes by tax bracket is heavily skewed.
 <br>
 ## Model Prediction
-**Note**: Unfortunately, due to the nature of my data and the amount of time I had to complete this project, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class. I would also definitely broaden my data so I would have more to work with, and thus more to analyze.
+**Note**: Unfortunately, due to the nature of my data and the time constraint, I was unable to find a method of data prediction that fit the data well, since my data is essentially a boolean of whether or not a market was present in a zip code (aka largely categorical). However, after much discussion (thanks Susan!) and research, there were other ways I could attempt to analyze my data, as seen below. If I had more time (and I intend to update this project once I have time), I would read up on other methods of prediction not discussed in class. I would also definitely broaden my data so I would have more to work with, and thus more to analyze.
 <br>
-I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this seemed to be the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
+To begin, I ran a logistic regression on the data and plotted the results. From my research and what we've learned in class, this seemed to be the most logical approach since I could treat the presence of a market as a boolean, thus making it a dependent variable that fits for logistic regression:<br>
 
 ![https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png](https://user-images.githubusercontent.com/66935005/165962954-1d582155-7550-4c81-ba70-57c5360dc391.png)
 
@@ -240,8 +323,8 @@ def LogRegAndConfMatrix():
     plt.show()
 ```
 
-<br>
-Due to the small size of the data, there was not a lot for the model to work with and create a good prediction. There is a very slight negative prediction, to the point where it could be negligible. As seen below, it is not very accurate either:<br>
+
+Due to the small size of the data, there was not a lot for the model to work with and it could not create a good prediction. There is a very slight negative prediction, to the point where it could be negligible. As seen below, it is not very accurate either:<br>
 
 ```python
     y_pred = lr.predict(X_test)
@@ -250,7 +333,7 @@ Due to the small size of the data, there was not a lot for the model to work wit
     # Prints: Accuracy of logistic regression: 0.53
 ```
 
-<br>
+
 The confusion matrix that is produced from this analysis is as follows:<br>
 
 ![https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png](https://user-images.githubusercontent.com/66935005/166070505-64b67e09-d1be-4c6f-bb8d-72be3f2f9e03.png)
@@ -269,8 +352,6 @@ The confusion matrix that is produced from this analysis is as follows:<br>
 ```
 <br>
 With this model, there is not much to conclude besides that this model does not fit the data well. The confusion matrix shows almost an even split between correctly guessed predictions versus incorrect, which goes along with the 53% accuracy rate. I wouldn't necessarily claim that there's a "perfect" predictive model for this data - rather, the data requires other numerical categories and the perspective of this project needs to be adjusted. There are too many clashing variables that get in the way of accurate predictive modeling, such as the skew towards the middle tax bracket, the make up of NYC, the low number of farmer's markets compared to the number of zipcodes, and the lack of overall data categories. When I come back to this project, I intend to reframe my original question in order to include numerical data, such as "does the median income of a zip code predict the _revenue_ of a farmer's market", or different methods of analyzing how the populations of these zip codes interact with the farmer's markets (depending on the data sets online, of course). This definitely helped me understand how important figuring out the scope of your data and research question is when developing a project.
-
-<br>
 
 ## Resources
 **Market data**: https://data.cityofnewyork.us/dataset/DOHMH-Farmers-Markets/8vwk-6iz2/data<br>
